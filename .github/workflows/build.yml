@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Compile main.tex
+        run: nix develop --command latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: thesis-pdf
+          path: main.pdf
+          if-no-files-found: error
