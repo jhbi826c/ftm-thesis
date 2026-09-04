@@ -1,0 +1,161 @@
+\documentclass[lang=en]{ftmthesis}
+\addbibresource{references.bib}
+
+\begin{document}
+
+\frontmatter
+\pagenumbering{Roman}
+
+\date{\today}
+\title{Der Titel der Arbeit}
+\author{Vorname Nachname}
+\dateofbirth{1.2.1990}
+\placeofbirth{Dresden}
+\matriculationnumber{123456789}
+
+\thesis{diploma}
+\graduation[Dipl.-Ing.]{Diplomingenieur}
+
+\supervisor{Supervisor I}
+\referee{Prof. Dr.-Ing. Hans Christian Schmale \and 2nd Referee}
+
+\maketitle
+
+\TUDoption{declaration}{notoc,chapter}
+\begin{declarations}
+	\confirmation
+\end{declarations}
+\cleardoublepage
+
+\makeabstract % {Deutsch} {English}
+{Das ist eine Zusammenfassung.}
+{This is an abstract.}
+
+\tableofcontents
+
+\listoffigures
+\listoftables
+
+% \newacronym{<label>}{<short>}{<long>}, referenced with \gls{<label>}
+\newacronym{edx}{EDX}{Energy Dispersive X-ray Spectroscopy}
+\makeacronyms
+
+\mainmatter	% Inhaltliche Kapitel
+
+\setcounter{chapter}{-1}	% chapter 0: how to use this class
+\chapter{About this Template}
+\label{chap:about}
+Everything this thesis needs is in three files: \texttt{main.tex}, the class \texttt{ftmthesis.cls} and the bibliography \texttt{references.bib}.
+Images go into \texttt{figs/}.
+Delete this chapter once you have read it.
+
+\section{Language}
+Write \texttt{lang=en} or \texttt{lang=de} in the first line, whichever language you write in:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\documentclass[lang=de]{ftmthesis}
+\end{lstlisting}
+Add further options after it if you need them, for example \texttt{BCOR=10mm} for a wider binding correction or \texttt{oneside} if the thesis is not printed double-sided.
+
+Use \verb|\iflang{<german>}{<english>}| wherever a piece of text has to differ between the two languages.
+
+\section{Cover Page}
+Fill in the commands above \verb|\maketitle|: \verb|\title|, \verb|\author|, \verb|\date|, \verb|\dateofbirth|, \verb|\placeofbirth|, \verb|\matriculationnumber|, \verb|\supervisor| and \verb|\referee|.
+Separate two referees with \verb|\and|.
+
+State the type of work with \verb|\thesis| and \verb|\graduation|:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\thesis{diploma}
+\graduation[Dipl.-Ing.]{Diplomingenieur}
+\end{lstlisting}
+Instead of \texttt{diploma} you can write \texttt{bachelor}, \texttt{master}, \texttt{student}, \texttt{project} or \texttt{seminar}; the full list is in the \texttt{tudscr} documentation.
+
+Faculty, chair and the FTM logo are already set, leave them alone.
+
+\section{Front Matter}
+Leave the \texttt{declarations} environment as it is, the statement of authorship needs no input.
+
+Write the abstract twice, German first, English second:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\makeabstract
+{Das ist eine Zusammenfassung.}
+{This is an abstract.}
+\end{lstlisting}
+
+Keep or delete \verb|\tableofcontents|, \verb|\listoffigures| and \verb|\listoftables| as you need them.
+
+Declare every abbreviation above \verb|\makeacronyms| and write \verb|\gls{edx}| in the text:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\newacronym{edx}{EDX}{Energy Dispersive X-ray Spectroscopy}
+\end{lstlisting}
+The first use spells it out, \gls{edx}, every use after that is short, \gls{edx}.
+An abbreviation you never use does not appear in the list.
+
+\section{Main Matter}
+Write your chapters after \verb|\mainmatter| with \verb|\chapter| and \verb|\section|.
+Give anything you want to point at a \verb|\label| and refer to it with \verb|\Cref|, which supplies the name itself, as in \Cref{chap:about}.
+
+\section{Figures and Tables}
+Put your images into \texttt{figs/} and scale them relative to \verb|\linewidth|, see \Cref{fig:logo}.
+Write the \verb|\caption| first and the \verb|\label| after it.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.45\linewidth]{figs/ftm-logo.pdf}
+	\caption{A figure with a caption below it.}
+	\label{fig:logo}
+\end{figure}
+
+Build tables with \verb|\toprule|, \verb|\midrule| and \verb|\bottomrule|, without vertical rules, see \Cref{tab:example}.
+Put the caption above the table.
+
+\begin{table}[htb]
+	\centering
+	\caption{A table with its caption above it.}
+	\label{tab:example}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		Title 1     & Title 2     & Title 3     \\ \midrule
+		Element 1.1 & Element 1.2 & Element 1.3 \\
+		Element 2.1 & Element 2.2 & Element 2.3 \\
+		Element 3.1 & Element 3.2 & Element 3.3 \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Write displayed equations in an \texttt{equation} environment and use \verb|\bm| for bold symbols:
+\begin{equation}
+	E^{2} = \left(\bm{p}\,c\right)^{2} + \left(m_{0}\,c^{2}\right)^{2},
+	\qquad
+	\gamma = \frac{1}{\sqrt{1 - \bm{v}^{2}/c^{2}}}
+	\label{eq:relativity}
+\end{equation}
+\Cref{eq:relativity} relates the energy of a particle to its momentum and its rest mass.
+
+\section{Bibliography}
+Paste the BibTeX entry offered by the publisher or the search engine into \texttt{references.bib} and cite it by its key: \verb|\cite{mathiszik2024non}| gives \cite{mathiszik2024non}.
+An entry you never cite is not printed.
+
+\section{Back Matter and Appendix}
+Write the acknowledgment after \verb|\makeacknowledgment|.
+
+Write the appendices after \verb|\appendix|, each one as a \verb|\chapter|, and they are lettered A, B and so on.
+
+\chapter{Introduction}
+\label{chap:introduction}
+\blindtext
+
+\chapter{Conclusion}
+\label{chap:conclusion}
+\blindtext
+
+\small
+\printbibliography
+\normalsize
+
+\makeacknowledgment
+\blindtext
+
+\appendix
+\chapter{Appendix}
+\label{sec:appendix}
+\blindtext
+\end{document}
